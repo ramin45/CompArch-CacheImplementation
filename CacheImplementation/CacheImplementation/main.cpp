@@ -40,27 +40,51 @@ struct config{
  }
  */
 
+//class cache{
+//    int cacheBlocks[(cacheconfig.L1size/cacheconfig.L1blocksize)];};
+//
+//class cacheways{
+//    cache caches
+//};
+//
+//    for (int i=0; i<cacheconfig.L2setsize;i++){
+//        int cache2a[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
+//
+//    }
+//    int cache2a[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
+//    int cache2b[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
+//    int cache2c[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
+//    int cache2d[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
+//
+//
+//};
+
+
 int main(int argc, char* argv[]){
     
     
-    
+    cout<<"1"<<endl;
     config cacheconfig;
     ifstream cache_params;
     string dummyLine;
-    cache_params.open(argv[1]);
+    cache_params.open("cacheconfig.txt");
     while(!cache_params.eof())  // read config file
     {
+
         cache_params>>dummyLine;
         cache_params>>cacheconfig.L1blocksize;
+        cout<<cacheconfig.L1blocksize;
         cache_params>>cacheconfig.L1setsize;
         cache_params>>cacheconfig.L1size;
         cache_params>>dummyLine;
         cache_params>>cacheconfig.L2blocksize;
         cache_params>>cacheconfig.L2setsize;
         cache_params>>cacheconfig.L2size;
+
     }
     
-    
+    cout<<"2"<<endl;
+
     
     // Implement by you:
     // initialize the hirearch cache system with those configs
@@ -76,9 +100,9 @@ int main(int argc, char* argv[]){
     ifstream traces;
     ofstream tracesout;
     string outname;
-    outname = string(argv[2]) + ".out";
+    outname = "trace.out";
     
-    traces.open(argv[2]);
+    traces.open("trace.txt");
     tracesout.open(outname.c_str());
     
     string line;
@@ -86,7 +110,7 @@ int main(int argc, char* argv[]){
     string xaddr;       // the address from the memory trace store in hex;
     unsigned int addr;  // the address from the memory trace store in unsigned int;
     bitset<32> accessaddr; // the address from the memory trace store in the bitset;
-    
+    int count=0;
     if (traces.is_open()&&tracesout.is_open()){
         while (getline (traces,line)){   // read mem access file and access Cache
             
@@ -95,42 +119,43 @@ int main(int argc, char* argv[]){
             stringstream saddr(xaddr);
             saddr >> std::hex >> addr;
             accessaddr = bitset<32> (addr);
-            
+            for (count; count<1;count++){
+                std::cout<<accessaddr;}
             
             // access the L1 and L2 Cache according to the trace;
-            if (accesstype.compare("R")==0)
-                
-            {
-                //Implement by you:
-                // read access to the L1 Cache,
-                //  and then L2 (if required),
-                //  update the L1 and L2 access state variable;
-                
-                
-                
-                
-                
-                
-                
-            }
-            else
-            {
-                //Implement by you:
-                // write access to the L1 Cache,
-                //and then L2 (if required),
-                //update the L1 and L2 access state variable;
-                
-                
-                
-                
-                
-                
-            }
+//            if (accesstype.compare("R")==0)
+//                
+//            {
+//                //Implement by you:
+//                // read access to the L1 Cache,
+//                //  and then L2 (if required),
+//                //  update the L1 and L2 access state variable;
+//                
+//                
+//                
+//                
+//                
+//                
+//                
+//            }
+//            else
+//            {
+//                //Implement by you:
+//                // write access to the L1 Cache,
+//                //and then L2 (if required),
+//                //update the L1 and L2 access state variable;
+//                
+//                
+//                
+//                
+//                
+//                
+//            }
+//            
+//            
             
-            
-            
-            tracesout<< L1AcceState << " " << L2AcceState << endl;  // Output hit/miss results for L1 and L2 to the output file;
-            
+//            tracesout<< L1AcceState << " " << L2AcceState << endl;  // Output hit/miss results for L1 and L2 to the output file;
+//            
             
         }
         traces.close();
