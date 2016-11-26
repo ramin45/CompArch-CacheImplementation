@@ -58,6 +58,13 @@ struct config{
 //
 //
 //};
+class create_cache
+
+{
+
+    
+    
+};
 
 
 int main(int argc, char* argv[]){
@@ -162,6 +169,24 @@ int main(int argc, char* argv[]){
         tracesout.close();
     }
     else cout<< "Unable to open trace or traceout file ";
+    
+    //For L1 cache
+    int L1_no_of_blocks= ( ( (cacheconfig.L1size) * 1024) / ( (cacheconfig.L1blocksize) * (cacheconfig.L1setsize )) ) ;
+    
+    int L1_no_of_index_bits= log2(L1_no_of_blocks);
+    
+    int L1_no_of_tag_bits = 32 - L1_no_of_index_bits;
+    
+    // For L2 cache
+    
+    
+    int L2_no_of_blocks= ( ( (cacheconfig.L2size) * 1024) / ( (cacheconfig.L2blocksize) * (cacheconfig.L2setsize )) ) ;
+    
+    int L2_no_of_index_bits= log2(L2_no_of_blocks);
+    
+    int L2_no_of_tag_bits = 32 - L2_no_of_index_bits;
+    
+    //pass the index bits and tag bits and the address to the structure
     
     
     
