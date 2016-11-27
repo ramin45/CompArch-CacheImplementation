@@ -40,31 +40,6 @@ struct config{
  }
  */
 
-//class cache{
-//    int cacheBlocks[(cacheconfig.L1size/cacheconfig.L1blocksize)];};
-//
-//class cacheways{
-//    cache caches
-//};
-//
-//    for (int i=0; i<cacheconfig.L2setsize;i++){
-//        int cache2a[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
-//
-//    }
-//    int cache2a[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
-//    int cache2b[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
-//    int cache2c[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
-//    int cache2d[(cacheconfig.L2size/(cacheconfig.L2blocksize*cacheconfig.L2setsize)]
-//
-//
-//};
-class create_cache
-
-{
-
-    
-    
-};
 
 
 int main(int argc, char* argv[]){
@@ -96,6 +71,43 @@ int main(int argc, char* argv[]){
     // Implement by you:
     // initialize the hirearch cache system with those configs
     // probably you may define a Cache class for L1 and L2, or any data structure you like
+    
+    
+    //For L1 cache
+    int L1_blocks=  ((cacheconfig.L1size) * 1024) / ( (cacheconfig.L1blocksize) * (cacheconfig.L1setsize));
+    
+    int L1_index_bits= log2(L1_blocks);
+    
+    int L1_tag_bits = 32 - L1_index_bits;
+    
+    // For L2 cache
+    
+    
+    int L2_blocks= ( ( (cacheconfig.L2size) * 1024) / ( (cacheconfig.L2blocksize) * (cacheconfig.L2setsize )) ) ;
+    
+    int L2_index_bits= log2(L2_blocks);
+    
+    int L2_tag_bits = 32 - L2_index_bits;
+    
+    
+    
+    /***** Create Cache and Valid bit array *****/
+    
+    
+    int L1arraysize=L1_blocks*cacheconfig.L1setsize; //how many indexes in total cache array
+    int L2arraysize=L2_blocks*cacheconfig.L2setsize; //how many indexes in total cache array
+    
+    //Create Caches L1 and L2:
+    
+    bitset<32> *L1= new bitset<32>[L1arraysize];
+    bitset<32> *L2= new bitset<32>[L2arraysize];
+    
+    //Create valid bit array for L1 and L2:
+    bitset<1> *L1valid= new bitset<1>[L1arraysize];
+    bitset<1> *L2valid= new bitset<1>[L2arraysize];
+    
+    /***** Cache and Valid bit arrays initalization completed *****/
+
     
     
     
@@ -170,29 +182,7 @@ int main(int argc, char* argv[]){
     }
     else cout<< "Unable to open trace or traceout file ";
     
-    //For L1 cache
-    int L1_no_of_blocks= ( ( (cacheconfig.L1size) * 1024) / ( (cacheconfig.L1blocksize) * (cacheconfig.L1setsize )) ) ;
-    
-    int L1_no_of_index_bits= log2(L1_no_of_blocks);
-    
-    int L1_no_of_tag_bits = 32 - L1_no_of_index_bits;
-    
-    // For L2 cache
-    
-    
-    int L2_no_of_blocks= ( ( (cacheconfig.L2size) * 1024) / ( (cacheconfig.L2blocksize) * (cacheconfig.L2setsize )) ) ;
-    
-    int L2_no_of_index_bits= log2(L2_no_of_blocks);
-    
-    int L2_no_of_tag_bits = 32 - L2_no_of_index_bits;
-    
-    //pass the index bits and tag bits and the address to the structure
-    
-    
-    
-    
-    
-    
+
     
     return 0;
 }
