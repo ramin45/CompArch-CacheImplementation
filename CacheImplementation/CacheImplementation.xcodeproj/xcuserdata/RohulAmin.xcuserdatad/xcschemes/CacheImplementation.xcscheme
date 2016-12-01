@@ -47,7 +47,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/RohulAmin/Documents/POLY/Academics/MSCS/Fall 2016/Computer Arch/Labs/Lab2/CompArch-CacheImplementation/CacheImplementation/CacheImplementation"
+      customWorkingDirectory = "/Users/RohulAmin/CompArch-CacheImplementation/CacheImplementation/CacheImplementation"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
