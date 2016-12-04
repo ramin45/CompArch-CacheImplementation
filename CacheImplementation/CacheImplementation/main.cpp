@@ -80,11 +80,15 @@ int main(int argc, char* argv[])
     
     //For L1 cache
     
+<<<<<<< HEAD
     int L1_blocks, L1_index_bits, L1_offset_bits, L1_tag_bits;
     int L2_blocks, L2_index_bits, L2_offset_bits, L2_tag_bits;
 
     if (cacheconfig.L1setsize!=0){
     L1_blocks=  ((cacheconfig.L1size) * 1024) / ( (cacheconfig.L1blocksize) * (cacheconfig.L1setsize));
+=======
+    int L1_blocks=  ((cacheconfig.L1size) * 1024) / ( (cacheconfig.L1blocksize) * (cacheconfig.L1setsize));
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
     cout<<"no of blocks L1 "<<L1_blocks;
     L1_index_bits= log2(L1_blocks);
     cout<<"no of index bits L1 "<<L1_index_bits;
@@ -327,10 +331,15 @@ int main(int argc, char* argv[])
                       int way_hit = 0;
                       for( int i =0 ; i<cacheconfig.L2setsize; i++)
                       {
+<<<<<<< HEAD
                           a=index_L2_i + (L2_blocks * i);
                           cout<<"bloacksize: "<<L2_blocks<<endl;
                           long int b = int(L2[a].to_ulong());
                           cout<<"a: "<<a<<endl;
+=======
+                          a=index_L2_i + (cacheconfig.L2blocksize * i);
+                          long int b = int(L2[a].to_ulong());
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                           if(tag_L2_i == b)
                           {
                               cout<<" Read hit in L2"<<endl;                                       //Read hit in L2 output 1
@@ -348,12 +357,20 @@ int main(int argc, char* argv[])
                           
                           for( int i =0 ; i< L2_tag_bits ; i++)
                           {
+<<<<<<< HEAD
                               L2[index_L2_i + ((L2_blocks)*L2RR[index_L2_i])][i] = tag_L2[i];
                               cout<<tag_L2[i];
                           }
                           cout<<"tag_L2_i : "<<tag_L2_i<<endl;
                           L2valid[index_L2_i] = 1;
                           cout<<"L2 index: "<<(index_L2_i + ((L2_blocks)*L2RR[index_L2_i]))<<endl;
+=======
+                              L2[index_L2_i + ((cacheconfig.L2blocksize)*L2RR[index_L2_i])][i] = tag_L1[i];
+                              
+                          }
+                          L2valid[index_L2_i] = 1;
+                          
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
 
                           if(L2RR[index_L2_i] == (cacheconfig.L2setsize-1))
                           {
@@ -377,6 +394,7 @@ int main(int argc, char* argv[])
                               
                           }
                           cout<<"IS THIS WHAT YOU WANT =>"<<endl<<index_L1_i;
+<<<<<<< HEAD
                           cout<<"Tag bit written to L1 when hit miss in L1 and L2: "<<tag_L1_i<<endl;
                           L1valid[index_L1_i] = '1';
                           
@@ -391,6 +409,12 @@ int main(int argc, char* argv[])
                           cout<<"Miss in L1, Hit in L2, copy to L1 index: "<<index_L1_i<<" tag: "<<tag_L1_i<<endl;
 
                       }
+=======
+                          L1valid[index_L1_i] = '1';
+                          
+                      }
+
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                   }
                   
               }
@@ -400,7 +424,11 @@ int main(int argc, char* argv[])
                   int way_hit = 0;
                   for ( int i = 0 ; i<cacheconfig.L1setsize; i++)
                   {
+<<<<<<< HEAD
                       a= index_L1_i + (L1_blocks * i);
+=======
+                      a= index_L1_i + (cacheconfig.L1blocksize * i);
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                       long int b = int(L1[a].to_ulong());
                       
                       if(tag_L1_i == b)
@@ -420,34 +448,59 @@ int main(int argc, char* argv[])
                    {
                        cout<<"Read hit in L2"<<endl;                                           //Read hit in L2
                        L2AcceState=1;
+<<<<<<< HEAD
                        if(L1valid[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])] == '0')
+=======
+                       if(L1valid[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])] == '0')
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                        {
                            cout<<"that block is empty , we can directly put data here . no need to evict"<<endl;   //Updated value in empty L1 cache
                            for(int j =0 ; j<tag_L1_i; j++)
                            {
+<<<<<<< HEAD
                                L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][j] = tag_L1[j];
                            }
                            L1valid[index_L1_i + index_L1_i + ((L1_blocks)*L1RR[index_L1_i])] = '1';
                        }
                        else if(L1valid[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])] == '1')                            //When L1 is not empty , evict from L1 put to L2
+=======
+                               L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][j] = tag_L1[j];
+                           }
+                           L1valid[index_L1_i + index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])] = '1';
+                       }
+                       else if(L1valid[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])] == '1')                            //When L1 is not empty , evict from L1 put to L2
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                        {
                         
                            bitset<32> copy,temp;
                            for(int t=0;t<=L1_index_bits;t++)
                            {
+<<<<<<< HEAD
                                copy[t+L1_offset_bits]= L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][t+L1_offset_bits];
+=======
+                               copy[t+L1_offset_bits]= L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][t+L1_offset_bits];
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                            }
                            
                            for( int u=0 ; u<L1_tag_bits;u++)
                            {
                                
+<<<<<<< HEAD
                                copy[u + L1_index_bits +L1_offset_bits] = L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][u+ L1_index_bits +L1_offset_bits];
                                temp[u] = L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][ u + L1_index_bits + L1_offset_bits];
+=======
+                               copy[u + L1_index_bits +L1_offset_bits] = L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][u+ L1_index_bits +L1_offset_bits];
+                               temp[u] = L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][ u + L1_index_bits + L1_offset_bits];
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                            }
                            
                            for( int x = 0; x < L1_index_bits; x++)
                            {
+<<<<<<< HEAD
                                L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][x+L1_offset_bits] = accessaddr[x +L1_index_bits +L1_offset_bits];
+=======
+                               L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][x+L1_offset_bits] = accessaddr[x +L1_index_bits +L1_offset_bits];
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                            }
                            long int temp_i = int(temp.to_ulong());
                            for( int y =0; y< L2_tag_bits; y++)
@@ -464,35 +517,61 @@ int main(int argc, char* argv[])
                        {
                            L2[index_L2_i][v] = tag_L2[v];
                        }
+<<<<<<< HEAD
                        if(L1valid[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])] == '0')
+=======
+                       if(L1valid[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])] == '0')
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                        {
                            cout<<"that block is empty , we can directly put data here . no need to evict"<<endl;   //Updated value in empty L1 cache
                            for(int n =0 ; n<tag_L1_i; n++)
                            {
+<<<<<<< HEAD
                                L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][n] = tag_L1[n];
                            }
                            L1valid[index_L1_i + index_L1_i + ((L1_blocks)*L1RR[index_L1_i])] = '1';
                        }
 
                        else if(L1valid[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])] == '1')                            //When L1 is not empty , evict from L1 put to L2
+=======
+                               L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][n] = tag_L1[n];
+                           }
+                           L1valid[index_L1_i + index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])] = '1';
+                       }
+
+                       else if(L1valid[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])] == '1')                            //When L1 is not empty , evict from L1 put to L2
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                        {
                            
                            bitset<32> copy,temp;
                            for(int t=0;t<=L1_index_bits;t++)
                            {
+<<<<<<< HEAD
                                copy[t+L1_offset_bits]= L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][t+L1_offset_bits];
+=======
+                               copy[t+L1_offset_bits]= L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][t+L1_offset_bits];
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                            }
                            
                            for( int u=0 ; u<L1_tag_bits;u++)
                            {
                                
+<<<<<<< HEAD
                                copy[u + L1_index_bits +L1_offset_bits] = L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][u+ L1_index_bits +L1_offset_bits];
                                temp[u] = L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][ u + L1_index_bits + L1_offset_bits];
+=======
+                               copy[u + L1_index_bits +L1_offset_bits] = L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][u+ L1_index_bits +L1_offset_bits];
+                               temp[u] = L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][ u + L1_index_bits + L1_offset_bits];
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                            }
                            
                            for( int x = 0; x < L1_index_bits; x++)
                            {
+<<<<<<< HEAD
                                L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][x+L1_offset_bits] = accessaddr[x +L1_index_bits +L1_offset_bits];
+=======
+                               L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][x+L1_offset_bits] = accessaddr[x +L1_index_bits +L1_offset_bits];
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                            }
                            
                           
@@ -518,7 +597,11 @@ int main(int argc, char* argv[])
               int way_hit = 0;
               for ( int i = 0 ; i<cacheconfig.L1setsize; i++)
               {
+<<<<<<< HEAD
                   a= index_L1_i + (L1_blocks * i);
+=======
+                  a= index_L1_i + (cacheconfig.L1blocksize * i);
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                   long int b = int(L1[a].to_ulong());
                   
                   if(tag_L1_i == b)
@@ -539,7 +622,11 @@ int main(int argc, char* argv[])
                   int way_hit_L2 = 0;
                   for( int i =0 ; i<cacheconfig.L2setsize; i++)
                   {
+<<<<<<< HEAD
                       c=index_L2_i + (L2_blocks * i);
+=======
+                      c=index_L2_i + (cacheconfig.L2blocksize * i);
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                       long int v = int(L2[c].to_ulong());
                       if(tag_L2_i == v)
                       {
@@ -556,34 +643,59 @@ int main(int argc, char* argv[])
                       
                       cout<<"Read miss in L2 also , now getting the data from Main mem and saving it to both L1 and L2"<<endl;
                       L2AcceState = 2;
+<<<<<<< HEAD
                       if(L1valid[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])] == '0')
+=======
+                      if(L1valid[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])] == '0')
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                       {
                           cout<<"that block is empty , we can directly put data here . no need to evict"<<endl;   //Updated value in empty L1 cache
                           for(int j =0 ; j<tag_L1_i; j++)
                           {
+<<<<<<< HEAD
                               L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][j] = tag_L1[j];
                           }
                           L1valid[index_L1_i + index_L1_i + ((L1_blocks)*L1RR[index_L1_i])] = '1';
                       }
                       else if(L1valid[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])] == '1')                            //When L1 is not empty , evict from L1 put to L2
+=======
+                              L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][j] = tag_L1[j];
+                          }
+                          L1valid[index_L1_i + index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])] = '1';
+                      }
+                      else if(L1valid[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])] == '1')                            //When L1 is not empty , evict from L1 put to L2
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                       {
                           
                           bitset<32> copy,temp;
                           for(int t=0;t<=L1_index_bits;t++)
                           {
+<<<<<<< HEAD
                               copy[t+L1_offset_bits]= L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][t+L1_offset_bits];
+=======
+                              copy[t+L1_offset_bits]= L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][t+L1_offset_bits];
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                           }
                           
                           for( int u=0 ; u<L1_tag_bits;u++)
                           {
                               
+<<<<<<< HEAD
                               copy[u + L1_index_bits +L1_offset_bits] = L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][u+ L1_index_bits +L1_offset_bits];
                               temp[u] = L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][ u + L1_index_bits + L1_offset_bits];
+=======
+                              copy[u + L1_index_bits +L1_offset_bits] = L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][u+ L1_index_bits +L1_offset_bits];
+                              temp[u] = L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][ u + L1_index_bits + L1_offset_bits];
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                           }
                           
                           for( int x = 0; x < L1_index_bits; x++)
                           {
+<<<<<<< HEAD
                               L1[index_L1_i + ((L1_blocks)*L1RR[index_L1_i])][x+L1_offset_bits] = accessaddr[x +L1_index_bits +L1_offset_bits];
+=======
+                              L1[index_L1_i + ((cacheconfig.L1blocksize)*L1RR[index_L1_i])][x+L1_offset_bits] = accessaddr[x +L1_index_bits +L1_offset_bits];
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                           }
                           long int temp_i = int(temp.to_ulong());
                           for( int y =0; y< L2_tag_bits; y++)
@@ -593,6 +705,7 @@ int main(int argc, char* argv[])
                           
                           
                       }
+<<<<<<< HEAD
                       
                         for(int h =0 ; h<tag_L2_i; h++)                                             //Writing to L2
                           {
@@ -640,10 +753,20 @@ int main(int argc, char* argv[])
                       {
                           L2[temp_i][y] = copy[32-y];
                       }
+=======
+                        for(int h =0 ; h<tag_L2_i; h++)                                             //Writing to L2
+                          {
+                              L2[index_L2_i + ((cacheconfig.L1blocksize)*L2RR[index_L2_i])][h] = tag_L2[h];
+                          }
+                          L2valid[index_L2_i + index_L2_i + ((cacheconfig.L2blocksize)*L2RR[index_L2_i])] = '1';
+                      }
+                      
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                       
                       
                   }
                   
+<<<<<<< HEAD
                   }
               
               
@@ -653,6 +776,15 @@ int main(int argc, char* argv[])
             
             
             
+=======
+              
+              }
+              
+              
+              
+              
+              
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
               
               
               
@@ -713,7 +845,11 @@ int main(int argc, char* argv[])
                     int way_hit = 0;
                     for( int i =0 ; i<cacheconfig.L2setsize; i++)
                     {
+<<<<<<< HEAD
                         a=index_L2_i + (L2_blocks * i);
+=======
+                        a=index_L2_i + (cacheconfig.L2blocksize * i);
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                         long int b = int(L2[a].to_ulong());
                         if(tag_L2_i == b)
                         {
@@ -743,7 +879,11 @@ int main(int argc, char* argv[])
                 int way_hit = 0;
                 for ( int i = 0 ; i<cacheconfig.L1setsize; i++)
                 {
+<<<<<<< HEAD
                     a= index_L1_i + (L2_blocks * i);
+=======
+                    a= index_L1_i + (cacheconfig.L2blocksize * i);
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                     long int b = int(L1[a].to_ulong());
                     
                     if(tag_L1_i == b)
@@ -781,7 +921,11 @@ int main(int argc, char* argv[])
                 int way_hit = 0;
                 for ( int i = 0 ; i<cacheconfig.L1setsize; i++)
                 {
+<<<<<<< HEAD
                     a= index_L1_i + (L1_blocks * i);
+=======
+                    a= index_L1_i + (cacheconfig.L1blocksize * i);
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                     long int b = int(L1[a].to_ulong());
                     
                     if(tag_L1_i == b)
@@ -804,7 +948,11 @@ int main(int argc, char* argv[])
                     int way_hit_2 = 0;
                     for( int j =0 ; j<cacheconfig.L2setsize; j++)
                     {
+<<<<<<< HEAD
                         c=index_L2_i + (L2_blocks * j);
+=======
+                        c=index_L2_i + (cacheconfig.L2blocksize * j);
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
                         long int d = int(L2[c].to_ulong());
                         if(tag_L2_i == d)
                         {
@@ -851,7 +999,10 @@ int main(int argc, char* argv[])
 
 
 
+<<<<<<< HEAD
     //R 0xb77af5b8
+=======
+>>>>>>> 64482182801ec45198dfb47d628feddeb4e76989
 
 }
 
